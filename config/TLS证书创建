@@ -1,0 +1,28 @@
+1）服务端私钥和证书
+
+#生成服务端私钥                                                                                                            
+openssl genrsa -out server/server.key 2048                                                                                          
+#生成证书请求文件
+openssl req -new -out server/server.csr -key server/server.key -subj "/C=CN/ST=SH/L=SH/O=fish/OU=fish/CN=服务器IP或域名"
+
+
+2）客户端私钥和证书
+#生成客户端私钥                                                                                                            
+openssl genrsa -out client/client.key  2048                                                                                         
+#生成证书请求文件                                                                                                          
+openssl req -new -out client/client.csr -key client/client.key -subj "/C=CN/ST=SH/L=SH/O=fish/OU=fish/CN=client"
+
+3）自签CA证书
+
+#生成根证书私钥(key文件)                                                                                                   
+openssl genrsa -out ca/ca.key 2048                                                                                    
+#生成根证书签发申请文件(csr文件)                                                                                        
+openssl req -new -key ca/ca.key -out ca/ca.csr -subj "/C=CN/ST=SH/L=SH/O=fish/OU=fish/CN=CA"
+#自签发根证书(crt文件)
+openssl x509 -req -days 365 -sha1 -extensions v3_ca -signkey ca/ca.key  -in ca/ca.csr -out ca/ca.crt
+
+4) 利用已签名根证书生成服务端证书和客户端证书
+#生成服务端证书
+openssl x509 -req -days 365 -sha1 -CA ca/ca.crt -CAkey ca/ca.key -CAcreateserial -in server/server.csr -out server/server.crt
+#生成客户端证书
+openssl x509 -req -days 365 -sha1 -CA ca/ca.crt -CAkey ca/ca.key -CAcreateserial -in client/client.csr -out client/client.crt

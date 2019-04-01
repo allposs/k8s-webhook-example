@@ -1,0 +1,21 @@
+# clusters refers to the remote service.
+clusters:
+  - name: remote-AuthZ-service
+    cluster:
+      certificate-authority:  /data/webhook/TLS/ca/ca.crt # CA for verifying the remote service.
+      server: https://192.168.99.1:3000/api/v1/AuthZ # URL of remote service to query. Must use ‘https‘.
+
+# users refers to the API server‘s webhook configuration.
+users:
+  - name: my-AuthZ-service
+    user:
+      client-certificate:  /data/webhook/TLS/client/client.crt # cert for the webhook plugin to use
+      client-key:  /data/webhook/TLS/client/client.key         # key matching the cert
+
+# kubeconfig files require a context. Provide one for the API server.
+current-context: webhook
+contexts:
+- context:
+    cluster: remote-AuthZ-service
+    user: my-AuthZ-service
+  name: webhook

@@ -1,0 +1,1 @@
+This is an example of K8S AuthZ and AuthN implementation.
