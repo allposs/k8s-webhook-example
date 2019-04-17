@@ -9,7 +9,7 @@ K8s-webhook-example is an implementation template for AuthZ and AuthN for k8s.
 
 Usage
 -----
-[Download release](https://github.com/jamescun/switcher/releases) or Build:
+[Download release](https://github.com/allposs/k8s-webhook-example/archive/master.zip) or Build:
 
     $ CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build k8s-webhook-example
 
