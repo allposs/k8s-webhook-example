@@ -41,7 +41,7 @@ Run k8s-webhook-example on port 80 of the machine and turn off TLS.
 
 Modify AuthN.yaml and AuthZ.yaml file.
 
-AuthN.yaml
+    AuthN.yaml
 
 Comment out the relevant TLS content:
 
@@ -53,7 +53,7 @@ Modify content
 
     Server: https://<k8s-webhook-example address>/api/v1/AuthN
 
-AuthZ.yaml
+    AuthZ.yaml
 
 Comment out the relevant TLS content:
 
