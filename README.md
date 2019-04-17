@@ -43,35 +43,50 @@ Modify AuthN.yaml and AuthZ.yaml file.
 AuthN.yaml
 
 Comment out the relevant TLS content:
+
     Certificate-authority: /data/webhook/TLS/ca/ca.crt
     Client-certificate: /data/webhook/TLS/client/client.crt
     Client-key: /data/webhook/TLS/client/client.key
+
 Modify content
+
     Server: https://<k8s-webhook-example address>/api/v1/AuthN
 
 AuthZ.yaml
 
 Comment out the relevant TLS content:
+
     Certificate-authority: /data/webhook/TLS/ca/ca.crt
     Client-certificate: /data/webhook/TLS/client/client.crt
     Client-key: /data/webhook/TLS/client/client.key
+
 Modify content
+
     Server: https://<k8s-webhook-example address>/api/v1/AuthZ
 
 Start minikube
 
 Do not use a proxy
+
     $ minikube start
+
 Using a proxy
+
     $ minikube start --registry-mirror=https://registry.docker-cn.com --docker-env HTTP_PROXY=http://代理地址端口 --docker-env HTTPS_PROXY=http://代理地址端口
 
 Copy the AuthN.yaml and AuthZ.yaml file to the /data/webhook directory in minikube,The minikube/User directory is interoperable with the user directory and can be copied by this method. Of course, it can be other methods.
+
     $ minikube ssh
+
 Modify the kube-apiserver.yaml file
+
     $ vi /etc/kubernetes/manifests/kube-apiserver.yaml
+    
 modify
+
     - --authorization-mode=Node,RBAC,Webhook
 New
+
     - --runtime-config=authentication.k8s.io/v1beta1=true
     - --authorization-webhook-config-file=/data/webhook/AuthZ.yaml
     - --authorization-webhook-cache-authorized-ttl=5m
