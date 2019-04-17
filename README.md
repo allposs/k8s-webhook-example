@@ -15,6 +15,7 @@ Usage
     $ CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build k8s-webhook-example
 
 To get help:
+
     $ ./k8s-webhook-example  --help
         k8s-webhook-example 1.0.1
         usage: k8s-webhook-example [options]
@@ -30,26 +31,35 @@ To get help:
           $ k8s-webhook-example
           k8s-webhook-example Listen 127.0.0.1:80 and TLS is flase  
           $ k8s-webhook-example --port 80 --ip 127.0.0.1 --switch flase
+
 Example
 -------
 Run k8s-webhook-example on port 80 of the machine and turn off TLS.
+
     $ k8s-webhook-example --port 80 --ip 127.0.0.1 --switch flase
+
 Modify AuthN.yaml and AuthZ.yaml file.
+
 AuthN.yaml
+
 Comment out the relevant TLS content:
     Certificate-authority: /data/webhook/TLS/ca/ca.crt
     Client-certificate: /data/webhook/TLS/client/client.crt
     Client-key: /data/webhook/TLS/client/client.key
 Modify content
     Server: https://<k8s-webhook-example address>/api/v1/AuthN
+
 AuthZ.yaml
+
 Comment out the relevant TLS content:
     Certificate-authority: /data/webhook/TLS/ca/ca.crt
     Client-certificate: /data/webhook/TLS/client/client.crt
     Client-key: /data/webhook/TLS/client/client.key
 Modify content
     Server: https://<k8s-webhook-example address>/api/v1/AuthZ
-start minikube
+
+Start minikube
+
 Do not use a proxy
     $ minikube start
 Using a proxy
